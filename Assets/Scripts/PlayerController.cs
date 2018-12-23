@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour {
     public float diveRollYPosMultiplier = 1f;
     public AnimationCurve diveRollYPosCurve;
 
+    public Transform weapon;
+    public Transform weaponIdle;
+    public Transform weaponShoot;
+    private Weapon weaponInfo;
+
     public bool isMoving = false;
     public bool isShooting = false;
     public bool isDiveRolling = false;
@@ -21,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     private Animator myAnimator;
     private void Awake() {
         myAnimator = GetComponent<Animator>();
+        weaponInfo = weapon.GetComponent<Weapon>();
     }
 
     void SmoothRotate(float yAngle) {
@@ -51,10 +57,15 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButton("Fire1")) {
             isShooting = true;
             myAnimator.SetBool("isShooting", isShooting);
+            weaponInfo.Fire(transform.rotation.eulerAngles.y);
 
+            weapon.position = weaponShoot.position;
+            weapon.rotation = weaponShoot.rotation;
         } else {
             isShooting = false;
             myAnimator.SetBool("isShooting", isShooting);
+            weapon.position = weaponIdle.position;
+            weapon.rotation = weaponIdle.rotation;
         }
 
         if (isDiveRolling) {
@@ -67,7 +78,11 @@ public class PlayerController : MonoBehaviour {
             Unrotate.rotation = Quaternion.identity;
             return;
         }
-        
+
+        if (Input.GetButton("Fire2") && enableDiveRoll) {
+            DiveRollStart();
+        }
+
         var h = Input.GetAxis("Horizontal");
         var v = Input.GetAxis("Vertical");
 
@@ -75,15 +90,13 @@ public class PlayerController : MonoBehaviour {
         var yAngle = Vector2.Angle(Vector2.right, movementVector);
         if (movementVector.y < 0)
             yAngle = 360 - yAngle;
-
-        if (Input.GetButton("Fire2") && enableDiveRoll) {
-            DiveRollStart();
-        }
+        yAngle = 180 - yAngle - 45;
 
         if (h != 0 || v != 0) {
             isMoving = true;
             myAnimator.SetBool("isMoving", isMoving);
-            SmoothRotate(180 - yAngle - 45);
+
+            SmoothRotate(yAngle);
 
             if (isShooting) {
                 transform.position += transform.forward * speed * shootingMoveMultiplier * Time.deltaTime;
