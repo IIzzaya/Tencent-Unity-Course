@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -33,8 +34,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Item
+  - PlayerPick
   - Bullet
   - Player
   m_SortingLayers:

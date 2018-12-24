@@ -15,10 +15,11 @@ public class PlayerController : MonoBehaviour {
     public float diveRollYPosMultiplier = 1f; // 翻滚时的人物重心Y轴方向偏移倍率
     public AnimationCurve diveRollYPosCurve; // 翻滚时的人物重心Y轴方向偏移变化曲线
 
-    public Transform weapon; // 武器的位置状态参数
+    public Transform weaponTransform; // 武器的位置状态参数
     public Transform weaponIdle; // 武器处于戒备手持时的位置状态
     public Transform weaponShoot; // 武器处于射击时的位置状态
-    private Weapon weaponInfo; // 武器信息的控制脚本
+    private Weapon weapon; // 武器信息的控制脚本
+    public Weapon weaponToEquip; // 待拾取的武器
 
     public bool isDead = false; // 角色是否死亡
     public bool isMoving = false; // 角色是否在移动中
@@ -36,7 +37,8 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         myAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        weaponInfo = weapon.GetComponent<Weapon>();
+        weapon = weaponTransform.GetComponent<Weapon>();
+        weapon.Equip();
     }
 
     void SmoothRotate(float yAngle) {
@@ -81,16 +83,16 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetButton("Fire1")) {
             if (enableShooting) {
                 isShooting = true;
-                weapon.position = weaponShoot.position;
-                weapon.rotation = weaponShoot.rotation;
-                weaponInfo.Fire(transform.rotation.eulerAngles.y);
+                weaponTransform.position = weaponShoot.position;
+                weaponTransform.rotation = weaponShoot.rotation;
+                weapon.Fire(transform.rotation.eulerAngles.y);
             } else {
                 isShooting = false;
             }
         } else {
             isShooting = false;
-            weapon.position = weaponIdle.position;
-            weapon.rotation = weaponIdle.rotation;
+            weaponTransform.position = weaponIdle.position;
+            weaponTransform.rotation = weaponIdle.rotation;
         }
         myAnimator.SetBool("isShooting", isShooting);
     }
@@ -122,7 +124,19 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void CheckWeaponToEquip() {
+        if (Input.GetKeyDown(KeyCode.E) && weaponToEquip != null) {
+            weapon.DropDown();
+            weapon = weaponToEquip;
+            weapon.Equip();
+            weaponTransform = weapon.transform;
+            weaponToEquip = null;
+        }
+    }
+
     private void Update() {
+
+        CheckWeaponToEquip();
 
         CheckShoot();
 

@@ -11,7 +11,11 @@ public enum EWeaponType {
 public class Weapon : MonoBehaviour {
 
 	public Transform muzzle;
+	public Transform model;
+	public Transform equipRect;
 	public GameObject bulletPrefab;
+	public bool isEquipped = false;
+	private Collider itemCollider;
 
 	[Header("Weapon Proerties 武器参数")]
 	[SerializeField]
@@ -45,5 +49,50 @@ public class Weapon : MonoBehaviour {
 				break;
 		}
 
+	}
+
+	public void Equip() {
+		isEquipped = true;
+		model.position = equipRect.position;
+		model.rotation = equipRect.rotation;
+		model.localScale = equipRect.localScale;
+		
+		if (itemCollider == null)
+			itemCollider = GetComponent<Collider>();
+		itemCollider.enabled = false;
+	}
+
+	public void DropDown() {
+		isEquipped = false;
+		itemCollider.enabled = true;
+	}
+
+	private float floatingTimer = 0f;
+	private float floatingFrequency = 3f;
+	private float floatingAmplitude = 0.5f;
+	public void WaitToPickAnimation() {
+
+		var rotation = model.eulerAngles;
+		rotation.y += 30f * Time.deltaTime;
+		model.rotation = Quaternion.Euler(rotation);
+
+		floatingTimer += Time.deltaTime;
+		if (floatingTimer > 2 * floatingFrequency) { floatingTimer = 0f; }
+		var position = model.position;
+		position.y = transform.position.y + Mathf.Cos(Mathf.PI * (floatingTimer - floatingFrequency) / floatingFrequency) * floatingAmplitude;
+		model.position = position;
+	}
+
+	private void Start() {
+		if (!isEquipped) {
+			itemCollider = GetComponent<Collider>();
+			DropDown();
+		}
+	}
+
+	private void Update() {
+		if (!isEquipped) {
+			WaitToPickAnimation();
+		}
 	}
 }
