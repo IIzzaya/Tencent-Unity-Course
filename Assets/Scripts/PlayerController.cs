@@ -18,8 +18,9 @@ public class PlayerController : MonoBehaviour {
     public Transform weaponTransform; // 武器的位置状态参数
     public Transform weaponIdle; // 武器处于戒备手持时的位置状态
     public Transform weaponShoot; // 武器处于射击时的位置状态
-    private Weapon weapon; // 武器信息的控制脚本
+    public Weapon weapon; // 武器信息的控制脚本
     public Weapon weaponToEquip; // 待拾取的武器
+    public WeaponModule moduleToEquip;
 
     public bool isDead = false; // 角色是否死亡
     public bool isMoving = false; // 角色是否在移动中
@@ -32,11 +33,11 @@ public class PlayerController : MonoBehaviour {
 
     public Transform Unrotate; // [相机追踪用]没有旋转方向变化的人物坐标
     private Animator myAnimator; // [角色动画控制用]
-    private Rigidbody rb; // [角色刚体]使用刚体进行移动，可以进行碰撞除颤
+    // private Rigidbody rb; // [角色刚体]使用刚体进行移动，可以进行碰撞除颤
 
     private void Awake() {
         myAnimator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>();
         weapon = weaponTransform.GetComponent<Weapon>();
         weapon.Equip();
     }
@@ -125,12 +126,20 @@ public class PlayerController : MonoBehaviour {
     }
 
     void CheckWeaponToEquip() {
-        if (Input.GetKeyDown(KeyCode.E) && weaponToEquip != null) {
-            weapon.DropDown();
-            weapon = weaponToEquip;
-            weapon.Equip();
-            weaponTransform = weapon.transform;
-            weaponToEquip = null;
+        if (Input.GetKeyDown(KeyCode.E)) {
+            if (weaponToEquip != null) {
+                weapon.DropDown();
+                weapon = weaponToEquip;
+                weapon.Equip();
+                weaponTransform = weapon.transform;
+                weaponToEquip = null;
+            }
+
+            if (moduleToEquip != null) {
+                weapon.EquipModule(moduleToEquip);
+                moduleToEquip = null;
+            }
+
         }
     }
 

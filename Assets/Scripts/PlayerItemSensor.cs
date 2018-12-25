@@ -15,6 +15,13 @@ public class PlayerItemSensor : MonoBehaviour {
 				player.weaponToEquip = weapon;
 			}
 		}
+		if (other.tag == "WeaponModule") {
+			var module = other.GetComponent<WeaponModule>();
+			if (!module.isEquipped) {
+				Debug.Log("Press E to equip " + module.name);
+				player.moduleToEquip = module;
+			}
+		}
 
 	}
 
@@ -25,15 +32,13 @@ public class PlayerItemSensor : MonoBehaviour {
 				player.weaponToEquip = null;
 			}
 		}
+
+		if (other.tag == "WeaponModule") {
+			var module = other.GetComponent<WeaponModule>();
+			if (module == player.moduleToEquip) {
+				player.moduleToEquip = null;
+			}
+		}
 	}
 
-	// Use this for initialization
-	void Start() {
-
-	}
-
-	// Update is called once per frame
-	void Update() {
-
-	}
 }
