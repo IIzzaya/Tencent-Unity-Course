@@ -172,6 +172,38 @@ public class Weapon : FloatingItem {
 		UpdateModulesProperty();
 	}
 
+	public void EquipPresetModule(WeaponModule module) {
+
+		module.Equip();
+
+		switch (module.modulePart) {
+			case EWeaponModulePart.Barrel:
+				barrel = (BarrelModule) module;
+				break;
+			case EWeaponModulePart.Body:
+				body = (BodyModule) module;
+				if (body.moduleType == EWeaponModuleType.Laser) {
+					body.laser.transform.SetParent(muzzle);
+					body.laser.transform.position = muzzle.position;
+					body.laser.transform.rotation = muzzle.rotation;
+					body.laser.gameObject.SetActive(false);
+				}
+				break;
+			case EWeaponModulePart.Grip:
+				grip = (GripModule) module;
+				break;
+			case EWeaponModulePart.Scope:
+				scope = (ScopeModule) module;
+				break;
+			case EWeaponModulePart.Stock:
+				stock = (StockModule) module;
+				break;
+		}
+
+		module.UpdateProperty();
+		UpdateModulesProperty();
+	}
+
 	public void UpdateModulesProperty() {
 		damage = 0;
 		criticalRate = 0;
@@ -225,6 +257,13 @@ public class Weapon : FloatingItem {
 
 		gameObject.tag = "Weapon";
 		isEquippable = true;
+
+		if (barrel != null) EquipPresetModule(barrel);
+		if (body != null) EquipPresetModule(body);
+		if (scope != null) EquipPresetModule(scope);
+		if (stock != null) EquipPresetModule(stock);
+		if (grip != null) EquipPresetModule(grip);
+
 		UpdateModulesProperty();
 	}
 

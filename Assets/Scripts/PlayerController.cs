@@ -43,8 +43,10 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         myAnimator = GetComponent<Animator>();
         // rb = GetComponent<Rigidbody>();
-        weapon = weaponTransform.GetComponent<Weapon>();
-        weapon.Equip();
+        if (weaponTransform != null && weaponTransform.GetComponent<Weapon>() != null) {
+            weapon = weaponTransform.GetComponent<Weapon>();
+            weapon.Equip();
+        }
     }
 
     void SmoothRotate(float yAngle) {
@@ -86,6 +88,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void CheckShoot() {
+        if (weapon == null) return;
 
         if (Input.GetButton("Fire") || Input.GetAxis("Fire") > 0) {
             if (enableShooting) {
@@ -138,7 +141,8 @@ public class PlayerController : MonoBehaviour {
     void CheckWeaponToEquip() {
         if (Input.GetButtonDown("Equip")) {
             if (weaponToEquip != null) {
-                weapon.DropDown(transform.position);
+                if (weapon != null)
+                    weapon.DropDown(transform.position);
                 weapon = weaponToEquip;
                 weapon.Equip();
                 weaponTransform = weapon.transform;

@@ -50,6 +50,7 @@ public class BarrelModule : WeaponModule {
 	public override void Start() {
 		base.Start();
 		modulePart = EWeaponModulePart.Barrel;
+		UpdateProperty();
 	}
 
 }

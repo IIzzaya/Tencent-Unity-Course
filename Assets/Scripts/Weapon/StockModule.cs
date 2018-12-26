@@ -31,6 +31,7 @@ public class StockModule : WeaponModule {
 	public override void Start() {
 		base.Start();
 		modulePart = EWeaponModulePart.Stock;
+		UpdateProperty();
 	}
 
 }

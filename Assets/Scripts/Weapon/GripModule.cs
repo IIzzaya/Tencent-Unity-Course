@@ -33,7 +33,7 @@ public class GripModule : WeaponModule {
 	public override void Start() {
 		base.Start();
 		modulePart = EWeaponModulePart.Grip;
-
+		UpdateProperty();
 	}
 
 }
