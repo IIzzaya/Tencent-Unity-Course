@@ -7,6 +7,8 @@ TagManager:
   - Weapon
   - WeaponModule
   - Resource
+  - LictchAttack
+  - LitchAttack
   layers:
   - Default
   - TransparentFX

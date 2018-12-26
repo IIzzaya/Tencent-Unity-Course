@@ -25,7 +25,6 @@ public class FloatingItem : MonoBehaviour {
 		if (itemCollider == null)
 			itemCollider = GetComponent<Collider>();
 		itemCollider.enabled = false;
-
 	}
 
 	public virtual void DropDown(Vector3 position) {
@@ -33,6 +32,8 @@ public class FloatingItem : MonoBehaviour {
 		transform.position = position;
 		isEquipped = false;
 		rb.useGravity = true;
+		if (itemCollider == null)
+			itemCollider = GetComponent<Collider>();
 		itemCollider.enabled = true;
 		rb.velocity = Vector3.up * 5f;
 	}

@@ -29,6 +29,7 @@ public class ScopeModule : WeaponModule {
 	public override void Start() {
 		base.Start();
 		modulePart = EWeaponModulePart.Scope;
+		UpdateProperty();
 	}
 
 }

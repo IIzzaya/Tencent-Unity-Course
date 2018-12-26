@@ -51,6 +51,7 @@ public class BodyModule : WeaponModule {
 	public override void Start() {
 		base.Start();
 		modulePart = EWeaponModulePart.Body;
+		UpdateProperty();
 	}
 
 }
