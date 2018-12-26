@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour {
     public float sinkSpeed = 2.5f;
     public int scoreValue = 10;
     public AudioClip deathClip;
+    static int getid = 0;
 
 
     Animator anim;
@@ -29,7 +30,7 @@ public class EnemyHealth : MonoBehaviour {
         currentHealth = startingHealth;
     }
 
-  
+
 
     void Update()
     {
@@ -79,5 +80,11 @@ public class EnemyHealth : MonoBehaviour {
         isSinking = true;
         //ScoreManager.score += scoreValue;
         Destroy(gameObject, 2f);
+    }
+
+    int GetId()
+    {
+        getid++;
+        return getid;
     }
 }
