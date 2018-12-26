@@ -86,18 +86,23 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void CheckShoot() {
-        weaponTransform.position = weaponShoot.position;
-        weaponTransform.rotation = weaponShoot.rotation;
+
         if (Input.GetButton("Fire") || Input.GetAxis("Fire") > 0) {
             if (enableShooting) {
                 isShooting = true;
+                weaponTransform.position = weaponShoot.position;
+                weaponTransform.rotation = weaponShoot.rotation;
                 weapon.Fire(transform.rotation.eulerAngles.y);
             } else {
                 isShooting = false;
+                weaponTransform.position = weaponIdle.position;
+                weaponTransform.rotation = weaponIdle.rotation;
                 weapon.Unfire();
             }
         } else {
             isShooting = false;
+            weaponTransform.position = weaponIdle.position;
+            weaponTransform.rotation = weaponIdle.rotation;
             weapon.Unfire();
         }
         myAnimator.SetBool("isShooting", isShooting);
