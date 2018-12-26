@@ -28,6 +28,9 @@ public class BodyModule : WeaponModule {
 	public int bulletCount = 1;
 	public float diffuseAngle = 0;
 
+	[Header("* Laser Only 激光枪参数")]
+	public LaserRenderer laser;
+
 	public override void UpdateProperty() {
 		_damageBase = damageBase;
 		_criticalRateMultiplier = criticalRateMultiplier;

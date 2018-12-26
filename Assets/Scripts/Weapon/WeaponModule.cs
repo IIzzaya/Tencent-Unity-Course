@@ -56,13 +56,11 @@ public class WeaponModule : FloatingItem {
 
 	public override void Equip() {
 		base.Equip();
-		rb.useGravity = false;
 		model.gameObject.SetActive(false);
 	}
 
-	public override void DropDown() {
-		base.DropDown();
-		rb.useGravity = true;
+	public override void DropDown(Vector3 position) {
+		base.DropDown(position);
 		model.gameObject.SetActive(true);
 	}
 

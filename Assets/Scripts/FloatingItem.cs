@@ -16,19 +16,25 @@ public class FloatingItem : MonoBehaviour {
 	public Transform model;
 	private Collider itemCollider;
 	private CapsuleCollider capsuleCollider;
-	protected Rigidbody rb;
+	[HideInInspector] public Rigidbody rb;
 
 	public virtual void Equip() {
+		if (rb == null) rb = GetComponent<Rigidbody>();
 		isEquipped = true;
-
+		rb.useGravity = false;
 		if (itemCollider == null)
 			itemCollider = GetComponent<Collider>();
 		itemCollider.enabled = false;
+
 	}
 
-	public virtual void DropDown() {
+	public virtual void DropDown(Vector3 position) {
+		transform.SetParent(null);
+		transform.position = position;
 		isEquipped = false;
+		rb.useGravity = true;
 		itemCollider.enabled = true;
+		rb.velocity = Vector3.up * 5f;
 	}
 
 	private float floatingTimer = 0f;
@@ -58,7 +64,7 @@ public class FloatingItem : MonoBehaviour {
 
 		if (!isEquipped) {
 			itemCollider = GetComponent<Collider>();
-			DropDown();
+			DropDown(transform.position);
 		}
 	}
 

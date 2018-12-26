@@ -91,6 +91,22 @@ public class Weapon : FloatingItem {
 					break;
 
 				case EWeaponModuleType.Laser:
+					RaycastHit hit;
+					var forward = muzzle.forward;
+					forward.y = 0;
+					if (Physics.Raycast(muzzle.position, forward, out hit, 100, LayerMask.GetMask("Default"))) {
+						Debug.DrawRay(muzzle.position, forward * hit.distance, Color.yellow);
+						body.laser.gameObject.SetActive(true);
+						body.laser.GetEndPoint().position = hit.point;
+						body.laser.SetMidPoints();
+						Debug.Log("Did Hit");
+					} else {
+						Debug.DrawRay(muzzle.position, forward * 100, Color.white);
+						Debug.Log("Did not Hit");
+						body.laser.gameObject.SetActive(true);
+						body.laser.GetEndPoint().position = muzzle.position + forward * 100;
+						body.laser.SetMidPoints();
+					}
 					break;
 				case EWeaponModuleType.Missile:
 					break;
@@ -99,13 +115,30 @@ public class Weapon : FloatingItem {
 		}
 	}
 
+	public void Unfire() {
+		if (body == null) { return; }
+		switch (body.moduleType) {
+			case EWeaponModuleType.Laser:
+				body.laser.gameObject.SetActive(false);
+				break;
+		}
+	}
+
 	public void DropModule(WeaponModule module) {
 		if (module == null) return;
-		module.transform.position = transform.position + Vector3.up * 1.5f;
-		module.DropDown();
+		if (module.moduleType == EWeaponModuleType.Laser && module.modulePart == EWeaponModulePart.Body) {
+			var laser = ((BodyModule) module).laser;
+			laser.gameObject.SetActive(false);
+			laser.transform.SetParent(module.transform);
+			laser.transform.position = module.transform.position;
+		}
+
+		module.DropDown(transform.position);
 	}
 
 	public void EquipModule(WeaponModule module) {
+
+		module.Equip();
 
 		switch (module.modulePart) {
 			case EWeaponModulePart.Barrel:
@@ -115,6 +148,12 @@ public class Weapon : FloatingItem {
 			case EWeaponModulePart.Body:
 				DropModule(body);
 				body = (BodyModule) module;
+				if (body.moduleType == EWeaponModuleType.Laser) {
+					body.laser.transform.SetParent(muzzle);
+					body.laser.transform.position = muzzle.position;
+					body.laser.transform.rotation = muzzle.rotation;
+					body.laser.gameObject.SetActive(true);
+				}
 				break;
 			case EWeaponModulePart.Grip:
 				DropModule(grip);
@@ -129,7 +168,6 @@ public class Weapon : FloatingItem {
 				stock = (StockModule) module;
 				break;
 		}
-		module.Equip();
 
 		UpdateModulesProperty();
 	}
