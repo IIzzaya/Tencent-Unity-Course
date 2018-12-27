@@ -41,6 +41,7 @@ public class FloatingItem : MonoBehaviour {
 	private float floatingTimer = 0f;
 	private float floatingFrequency = 3f; // 物体待拾取时的浮动速度
 	private float floatingAmplitude = 0.3f; // 物体待拾取时的浮动幅度
+	[HideInInspector] public float floatingDelta;
 	public void WaitToPickAnimation() {
 		var rotation = model.eulerAngles;
 		rotation.y += 30f * Time.deltaTime;
@@ -49,7 +50,8 @@ public class FloatingItem : MonoBehaviour {
 		floatingTimer += Time.deltaTime;
 		if (floatingTimer > 2 * floatingFrequency) { floatingTimer = 0f; }
 		var position = model.position;
-		position.y = transform.position.y + Mathf.Cos(Mathf.PI * (floatingTimer - floatingFrequency) / floatingFrequency) * floatingAmplitude;
+		floatingDelta = Mathf.Cos(Mathf.PI * (floatingTimer - floatingFrequency) / floatingFrequency) * floatingAmplitude;
+		position.y = transform.position.y + floatingDelta;
 		model.position = position;
 	}
 
