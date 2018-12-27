@@ -4,14 +4,18 @@ using UnityEngine;
 
 namespace AttackTown
 {
-    [RequireComponent(typeof(MeshRenderer))]
     public class BaseAttackTown : MonoBehaviour
     {
-        public Material MainMaterial;
-        public Material BuildMaterial;
-        private Transform Target;
-        private Transform BulletList;
+        
+        [SerializeField]
+        private Shader MainShader;
+        [SerializeField]
+        private Material MainMaterial;
+        private AttackTownMGR MGR;
 
+        public Transform Target { get { return Triggle.GetTarget(); } }
+        private Transform BulletList;
+        private Transform Head;
         //建造
         public bool IsBuilding = false;
         //巡视属性
@@ -22,45 +26,49 @@ namespace AttackTown
         [SerializeField]
         private GameObject BaseShootObj;
         [SerializeField]
-        private GameObject FireRoot;
+        private List<GameObject> FireRoot=new List<GameObject>();
         private float LastShootTime = 0;
         [SerializeField]
         private float ShootCd = 0.2f;
+        private int ShootIndex = 0;
 
+        private AttackTargetTriggle Triggle;
 
         private void Awake()
         {
-            BulletList = transform.parent.Find("Bullet");
-            if (BulletList==null)
-            {
-                BulletList = new GameObject("Bullet").transform;
-                BulletList.parent = transform.parent;
-            }
+            Head = transform.Find("Head");
+            MainMaterial = transform.Find("Body").GetComponent<MeshRenderer>().material;
+            MainShader = MainMaterial.shader;
+            Triggle = transform.GetComponent<AttackTargetTriggle>();
         }
-        public BaseAttackTown()
-        {
-            MainMaterial = transform.GetComponent<MeshRenderer>().material;
 
-            IsBuilding = true;
-        }
+ 
         public void TownUpdate()
         {
             if (!IsBuilding)
             {
                 if (Target == null)
                 {
-                    var eular = transform.localEulerAngles;
+                    var eular = Head.transform.localEulerAngles;
                     eular.y += SteerSpeed * Time.deltaTime;
+                    Head.transform.localEulerAngles = eular;
                 }
                 else
                 {
+                    
                     AimTo(Target.transform.position);
                     if (BaseShootObj != null)
                     {
                         var shoot = Instantiate(BaseShootObj);
                         if (FireRoot != null)
                         {
-                            shoot.GetComponent<BaseShootObj>().BeginShooting(FireRoot.transform);
+                            shoot.GetComponent<BaseShootObj>().BeginShooting(FireRoot[ShootIndex].transform);
+                            ShootIndex++;
+                            if (ShootIndex==FireRoot.Count)
+                            {
+                                ShootIndex = 0;
+                            }
+
                         }
                         shoot.transform.parent = BulletList;
                         Destroy(shoot, 10);
@@ -68,29 +76,51 @@ namespace AttackTown
                 }
             }
         }
+
         private void AimTo(Vector3 targetPos)
         {
             Vector3 Dir = targetPos - transform.position;
             Dir.y = 0;
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.LookRotation(Dir, transform.up),0.3f);
+            Head.transform.localRotation = Quaternion.Lerp(Head.transform.localRotation, Quaternion.LookRotation(Dir, Head.transform.up),0.3f);
         }
 
-        public void FindTarget(Transform target)
+
+
+        //建造开始初始化
+        public void BuildInit(AttackTownMGR mgr)
         {
-            if (Target!=null)
+            MainMaterial.shader = Shader.Find("FX/Hologram Effect");
+            transform.Find("Head").GetComponent<MeshRenderer>().material.shader = MainMaterial.shader;
+            MGR = mgr;
+            IsBuilding = true;
+        }
+
+        //建造ing
+        public void Building(Vector3 pos,LayerMask layer)
+        {
+            RaycastHit hit;
+            Ray ray = new Ray(pos+Vector3.up*10, -Vector3.up);
+            if (Physics.Raycast(ray, out hit, 20, layer))
             {
-                
+                transform.position = hit.point;
             }
         }
-        public delegate void DeathDelegate();
-        public void PrePareToBuild(Vector3 pos)
+
+        //建造
+        public void Builded()
         {
+            MainMaterial.shader = MainShader;
+            transform.Find("Head").GetComponent<MeshRenderer>().material.shader = MainShader;
+
+            IsBuilding = false;
+            BulletList = MGR.Bullet;
 
         }
 
 
 
-        
+
+
     }
 
 
