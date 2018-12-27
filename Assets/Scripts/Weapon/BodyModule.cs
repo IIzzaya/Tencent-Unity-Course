@@ -31,6 +31,10 @@ public class BodyModule : WeaponModule {
 	[Header("* Laser Only 激光枪参数")]
 	public LaserRenderer laser;
 
+	public override void GetRandomProperties() {
+		
+	}
+
 	public override void UpdateProperty() {
 		_damageBase = damageBase;
 		_criticalRateMultiplier = criticalRateMultiplier;

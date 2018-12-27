@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 136574108209594942}
   - component: {fileID: 114162249150421656}
   m_Layer: 31
-  m_Name: Block Man
+  m_Name: BlockMan
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

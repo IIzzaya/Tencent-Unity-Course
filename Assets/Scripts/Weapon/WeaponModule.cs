@@ -30,6 +30,17 @@ public class WeaponModule : FloatingItem {
 	[Header("WeaponModule Properties")]
 	public EWeaponModuleType moduleType;
 	public EWeaponModulePart modulePart;
+	public MeshRenderer rimRenderer;
+	public float rarity = 0; // 稀有度数值[0, 100]
+	public int rarityLevel { // 依据稀有度数值评判的稀有度等级，决定了模块Rim颜色依次是白、绿、蓝、紫、金
+		get {
+			if (rarity < 61.8) return 0;
+			if (rarity < 85.4) return 1;
+			if (rarity < 94.4) return 2;
+			if (rarity < 97.9) return 3;
+			else return 4;
+		}
+	}
 
 	[HideInInspector] public float _damageBase = 0f; // 伤害基数
 	[HideInInspector] public float _damageMultiplier = 1f; // 伤害乘数
@@ -54,6 +65,12 @@ public class WeaponModule : FloatingItem {
 	[HideInInspector] public float _burstBulletCountBase = 0f; // 连发基数
 	[HideInInspector] public float _burstBulletCountMultiplier = 1f; // 连发乘数
 
+	public void ChangeRarityRimMaterial(Material material) {
+		rimRenderer.material = material;
+	}
+
+	public virtual void GetRandomProperties() { }
+
 	public override void Equip() {
 		base.Equip();
 		model.gameObject.SetActive(false);
@@ -68,7 +85,6 @@ public class WeaponModule : FloatingItem {
 
 	public override void Start() {
 		base.Start();
-
 		gameObject.tag = "WeaponModule";
 		isEquippable = true;
 		UpdateProperty();
