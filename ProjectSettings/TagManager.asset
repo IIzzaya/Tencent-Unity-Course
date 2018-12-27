@@ -9,6 +9,7 @@ TagManager:
   - Resource
   - LictchAttack
   - LitchAttack
+  - enemyManager
   layers:
   - Default
   - TransparentFX

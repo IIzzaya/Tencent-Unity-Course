@@ -17,14 +17,17 @@ public class SmithAttack : MonoBehaviour {
     //EnemyHealth enemyHealth;
     bool playerInRange;
     float timer;
+    public GameObject enemyManager;
+    int wave;
 
 
     void Awake()
     {
         EnemyHealth self = gameObject.GetComponent<EnemyHealth>();
         int id = self.id;
+        wave = enemyManager.GetComponent<EnemyManager>().wave;
         player = GameObject.FindGameObjectWithTag("Player");
-        attackDamage = Mathf.FloorToInt(4 * (10 - 8 * Mathf.Exp(-id/10)));
+        attackDamage = Mathf.FloorToInt(4 * (10 - 8 * Mathf.Exp(-wave/10)));
         playerHealth = player.GetComponent<PlayerHealth>();
         //enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
@@ -58,11 +61,9 @@ public class SmithAttack : MonoBehaviour {
             Attack();
         }
 
-        if (playerHealth.currentHealth <= 0)
-        {
-            anim.SetBool("PlayerDead", true);
-        }
     }
+
+    
 
 
     void Attack()
