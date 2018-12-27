@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LichAttack : MonoBehaviour {
 
-    public float timeBetweenAttacks = 10.0f;
+    public float timeBetweenAttacks = 1f;
     public int attackDamage = 10;
     public int scoreValue = 10;
     //public AudioClip attackClip;
@@ -20,7 +20,11 @@ public class LichAttack : MonoBehaviour {
     Vector3 dir;
     Vector3 pos;
     RaycastHit hit;
-    
+
+    public Transform weapon;
+    private EnemyWeapon weaponInfo;
+    int i = 0;
+
 
 
     void Awake()
@@ -29,7 +33,10 @@ public class LichAttack : MonoBehaviour {
         playerHealth = player.GetComponent<PlayerHealth>();
         //enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
-       
+        weaponInfo = weapon.GetComponent<EnemyWeapon>();
+        weapon.position = weapon.position;
+        weapon.rotation = weapon.rotation;
+
     }
 
 
@@ -38,7 +45,7 @@ public class LichAttack : MonoBehaviour {
         if (other.gameObject.tag  == "LitchAttack")
         {
             playerInRange = true;
-            Debug.Log("In");
+            //Debug.Log("In");
         }
     }
 
@@ -48,7 +55,7 @@ public class LichAttack : MonoBehaviour {
         if (other.gameObject.tag == "LitchAttack")
         {
             playerInRange = false;
-            Debug.Log("Out");
+            //Debug.Log("Out");
         }
     }
 
@@ -56,7 +63,9 @@ public class LichAttack : MonoBehaviour {
     void Update()
     {
         timer += Time.deltaTime;
- 
+        anim.ResetTrigger("Attack1");
+       
+
 
         if (timer >= timeBetweenAttacks &&  playerInRange == true)
         {
@@ -73,25 +82,16 @@ public class LichAttack : MonoBehaviour {
     void Attack()
     {
         timer = 0f;
+        
 
         if (playerHealth.currentHealth > 0)
         {
-            anim.SetTrigger("Attack");
-            //enemyAudio.clip = attackClip;
-            //enemyAudio.Play();
-            pos = transform.position;
-            if (Physics.SphereCast(pos, 6.0f, transform.forward, out hit, 5))
-            {
-                Debug.Log("shit");
-                if (hit.collider.gameObject.tag == "player")
-                {
-                    //playerHealth.TakeDamage(attackDamage);
-                    
-                }
-            }
             
-            //anim.ResetTrigger("Attack");
-            //playerHealth.TakeDamage(attackDamage);
+                anim.SetTrigger("Attack1");
+            
+               
+            
+            weaponInfo.Fire(transform.rotation.eulerAngles.y);
             
         }
     }

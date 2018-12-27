@@ -5,10 +5,10 @@ using UnityEngine;
 /// <summary>
 /// 角色控制类
 /// </summary>
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerController : MonoBehaviour {
 
     [Header("角色属性")]
-    public float hp = 100f; // 生命值
     public float speed = 5f; // 移动速度
     public float rotateSpeed = 5f; // 旋转速度
 

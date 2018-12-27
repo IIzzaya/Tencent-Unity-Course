@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SmithAttack : MonoBehaviour {
 
-    public float timeBetweenAttacks = 10.0f;
-    public int attackDamage = 10;
+    public float timeBetweenAttacks = 0.5f;
+    public int attackDamage;
     public int scoreValue = 10;
     public AudioClip attackClip;
     AudioSource enemyAudio;
@@ -21,7 +21,10 @@ public class SmithAttack : MonoBehaviour {
 
     void Awake()
     {
+        EnemyHealth self = gameObject.GetComponent<EnemyHealth>();
+        int id = self.id;
         player = GameObject.FindGameObjectWithTag("Player");
+        attackDamage = Mathf.FloorToInt(4 * (10 - 8 * Mathf.Exp(-id/10)));
         playerHealth = player.GetComponent<PlayerHealth>();
         //enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
@@ -65,6 +68,7 @@ public class SmithAttack : MonoBehaviour {
     void Attack()
     {
         timer = 0f;
+        anim.ResetTrigger("Attack");
 
         if (playerHealth.currentHealth > 0)
         {

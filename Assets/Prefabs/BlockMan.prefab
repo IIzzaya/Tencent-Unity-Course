@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 54769430537849508}
   - component: {fileID: 136574108209594942}
   - component: {fileID: 114162249150421656}
+  - component: {fileID: 114314113518029852}
   m_Layer: 31
   m_Name: BlockMan
   m_TagString: Player
@@ -820,7 +821,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2965dcd39a2b93e4a88c276cd9f4e1da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
   speed: 5
   rotateSpeed: 5
   shootingMoveMultiplier: 0.33333334
@@ -922,6 +922,24 @@ MonoBehaviour:
   isDiveRolling: 0
   enableDiveRoll: 1
   Unrotate: {fileID: 4140635265491960}
+--- !u!114 &114314113518029852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1577878822773088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68157e6fa812b054087fca763b92f4de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  healthSlider: {fileID: 0}
+  damageImage: {fileID: 0}
+  deathClip: {fileID: 0}
+  flashSpeed: 5
+  flashColour: {r: 1, g: 0, b: 0, a: 0.1}
 --- !u!114 &114906238623326700
 MonoBehaviour:
   m_ObjectHideFlags: 1
