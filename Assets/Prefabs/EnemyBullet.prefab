@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 33863734240491662}
   - component: {fileID: 23886593587596254}
   - component: {fileID: 135325160094653284}
-  - component: {fileID: 114229024808547446}
+  - component: {fileID: 114351928924930394}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1167025502607992}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114229024808547446
+--- !u!114 &114351928924930394
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1167025502607992}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cea0b545095aa34394b582984e2db68, type: 3}
+  m_Script: {fileID: 11500000, guid: 60b0bacaf6f1f5d4bb41066175b50c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0

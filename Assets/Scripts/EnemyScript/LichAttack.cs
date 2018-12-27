@@ -22,7 +22,7 @@ public class LichAttack : MonoBehaviour {
     RaycastHit hit;
 
     public Transform weapon;
-    private Weapon weaponInfo;
+    private EnemyWeapon weaponInfo;
     int i = 0;
 
 
@@ -33,7 +33,7 @@ public class LichAttack : MonoBehaviour {
         playerHealth = player.GetComponent<PlayerHealth>();
         //enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
-        weaponInfo = weapon.GetComponent<Weapon>();
+        weaponInfo = weapon.GetComponent<EnemyWeapon>();
         weapon.position = weapon.position;
         weapon.rotation = weapon.rotation;
 

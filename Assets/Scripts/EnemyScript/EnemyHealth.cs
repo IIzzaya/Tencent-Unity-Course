@@ -12,7 +12,6 @@ public class EnemyHealth : MonoBehaviour {
     static int getid = 0;
     public int id;
 
-
     Animator anim;
     AudioSource enemyAudio;
     ParticleSystem hitParticles;
@@ -22,11 +21,9 @@ public class EnemyHealth : MonoBehaviour {
     public delegate void DeathDelegate();
     public event DeathDelegate DeathEvent;
 
-
-    void Awake()
-    {
+    void Awake() {
         id = GetId();
-        startingHealth = Mathf.FloorToInt(50 * (10 - 8*Mathf.Exp(-id/10)));
+        startingHealth = Mathf.FloorToInt(50 * (10 - 8 * Mathf.Exp(-id / 10)));
         anim = GetComponent<Animator>();
         enemyAudio = GetComponent<AudioSource>();
         hitParticles = GetComponentInChildren<ParticleSystem>();
@@ -35,20 +32,14 @@ public class EnemyHealth : MonoBehaviour {
         currentHealth = startingHealth;
     }
 
-
-
-    void Update()
-    {
+    void Update() {
         anim.ResetTrigger("GetHit");
-        if (isSinking)
-        {
+        if (isSinking) {
             transform.Translate(-Vector3.up * sinkSpeed * Time.deltaTime);
         }
     }
 
-
-    public void TakeDamage(int amount, Vector3 hitPoint)
-    {
+    public void TakeDamage(int amount, Vector3 hitPoint) {
         if (isDead)
             return;
 
@@ -60,22 +51,17 @@ public class EnemyHealth : MonoBehaviour {
         hitParticles.transform.position = hitPoint;
         hitParticles.Play();
 
-        if (currentHealth <= 0)
-        {
+        if (currentHealth <= 0) {
             Death();
         }
     }
 
-
-    void Death()
-    {
+    void Death() {
         isDead = true;
 
-        if (DeathEvent != null)
-        {
+        if (DeathEvent != null) {
             DeathEvent.Invoke();
         }
-
 
         capsuleCollider.isTrigger = true;
 
@@ -85,9 +71,7 @@ public class EnemyHealth : MonoBehaviour {
         enemyAudio.Play();
     }
 
-
-    public void StartSinking()
-    {
+    public void StartSinking() {
         GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         isSinking = true;
@@ -95,8 +79,7 @@ public class EnemyHealth : MonoBehaviour {
         Destroy(gameObject, 2f);
     }
 
-    int GetId()
-    {
+    int GetId() {
         getid++;
         return getid;
     }
