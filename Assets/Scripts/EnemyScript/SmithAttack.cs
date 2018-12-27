@@ -10,7 +10,6 @@ public class SmithAttack : MonoBehaviour {
     public AudioClip attackClip;
     AudioSource enemyAudio;
 
-
     Animator anim;
     GameObject player;
     PlayerHealth playerHealth;
@@ -18,60 +17,45 @@ public class SmithAttack : MonoBehaviour {
     bool playerInRange;
     float timer;
 
-
-    void Awake()
-    {
+    void Awake() {
         EnemyHealth self = gameObject.GetComponent<EnemyHealth>();
         int id = self.id;
         player = GameObject.FindGameObjectWithTag("Player");
-        attackDamage = Mathf.FloorToInt(4 * (10 - 8 * Mathf.Exp(-id/10)));
+        attackDamage = Mathf.FloorToInt(4 * (10 - 8 * Mathf.Exp(-id / 10)));
         playerHealth = player.GetComponent<PlayerHealth>();
         //enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent<Animator>();
     }
 
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == player)
-        {
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject == player) {
             playerInRange = true;
         }
     }
 
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == player)
-        {
+    void OnTriggerExit(Collider other) {
+        if (other.gameObject == player) {
             playerInRange = false;
         }
     }
 
-
-    void Update()
-    {
+    void Update() {
         timer += Time.deltaTime;
 
-        if (timer >= timeBetweenAttacks && playerInRange/* && enemyHealth.currentHealth > 0*/)
-        {
+        if (timer >= timeBetweenAttacks && playerInRange /* && enemyHealth.currentHealth > 0*/ ) {
             Attack();
         }
 
-        if (playerHealth.currentHealth <= 0)
-        {
+        if (playerHealth.currentHealth <= 0) {
             anim.SetBool("PlayerDead", true);
         }
     }
 
-
-    void Attack()
-    {
+    void Attack() {
         timer = 0f;
         anim.ResetTrigger("Attack");
 
-        if (playerHealth.currentHealth > 0)
-        {
+        if (playerHealth.currentHealth > 0) {
             anim.SetTrigger("Attack");
             //anim.ResetTrigger("Attack");
             playerHealth.TakeDamage(attackDamage);
