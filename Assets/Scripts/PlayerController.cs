@@ -147,11 +147,13 @@ public class PlayerController : MonoBehaviour {
                 weapon.Equip();
                 weaponTransform = weapon.transform;
                 weaponToEquip = null;
+                HUDController.DisableFloatingPanel();
             }
 
             if (moduleToEquip != null) {
                 weapon.EquipModule(moduleToEquip);
                 moduleToEquip = null;
+                HUDController.DisableFloatingPanel();
             }
 
         }
