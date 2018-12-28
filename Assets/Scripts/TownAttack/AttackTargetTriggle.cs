@@ -8,35 +8,55 @@ namespace AttackTown
     [RequireComponent(typeof(SphereCollider))]
     public class AttackTargetTriggle : MonoBehaviour
     {
-        public List<Transform> TargetList = new List<Transform>();
+        [SerializeField]
+        private List<Transform> TargetList = new List<Transform>();
 
         private void Awake()
         {
-            double dis = transform.parent.GetComponent<BaseAttackTown>().MaxDis;
+            double dis = transform.GetComponent<BaseAttackTown>().MaxDis;
             transform.GetComponent<SphereCollider>().radius = (float)dis;
         }
 
         public void AddTarget(Transform target)
         {
-            foreach (var item in TargetList)
+            if (!TargetList.Contains(target))
             {
-                if (item.name==target.name)
-                {
-                    return;
-                }
+                AddTarget(target);
             }
-            TargetList.Add(target);
         }
         public void SubTarget(Transform target)
         {
-            foreach (var item in TargetList)
+            if (TargetList.Contains(target))
             {
-                if (item.name == target.name)
-                {
-                    return;
-                }
+                SubTarget(target);
             }
         }
-       
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.tag=="Enemy")
+            {
+                AddTarget(other.transform);
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.tag=="Enemy")
+            {
+                SubTarget(other.transform);
+            }
+        }
+
+        public Transform GetTarget()
+        {
+            if (TargetList.Count!=null)
+            {
+                return TargetList[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
