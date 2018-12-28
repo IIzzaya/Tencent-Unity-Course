@@ -20,16 +20,20 @@ public class EnemyHealth : MonoBehaviour {
     bool isSinking;
     public delegate void DeathDelegate();
     public event DeathDelegate DeathEvent;
+    public EnemyManager enemyManager;
 
     void Awake() {
         id = GetId();
-        startingHealth = Mathf.FloorToInt(50 * (10 - 8 * Mathf.Exp(-id / 10)));
+        enemyManager = GameObject.Find("enemyManager").GetComponent<EnemyManager>();
+        int wave = enemyManager.wave;
+        startingHealth = Mathf.FloorToInt(50 * (10 - 8 * Mathf.Exp(-wave / 10)));
         anim = GetComponent<Animator>();
         enemyAudio = GetComponent<AudioSource>();
         hitParticles = GetComponentInChildren<ParticleSystem>();
         capsuleCollider = GetComponent<CapsuleCollider>();
 
         currentHealth = startingHealth;
+        
     }
 
     void Update() {
@@ -58,6 +62,7 @@ public class EnemyHealth : MonoBehaviour {
 
     void Death() {
         isDead = true;
+        enemyManager.enemyDelete(gameObject);
 
         if (DeathEvent != null) {
             DeathEvent.Invoke();

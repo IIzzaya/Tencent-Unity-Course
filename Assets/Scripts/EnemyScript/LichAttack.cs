@@ -45,7 +45,7 @@ public class LichAttack : MonoBehaviour {
         if (other.gameObject.tag  == "LitchAttack")
         {
             playerInRange = true;
-            //Debug.Log("In");
+            Debug.Log("In");
         }
     }
 
@@ -55,7 +55,7 @@ public class LichAttack : MonoBehaviour {
         if (other.gameObject.tag == "LitchAttack")
         {
             playerInRange = false;
-            //Debug.Log("Out");
+            Debug.Log("Out");
         }
     }
 
