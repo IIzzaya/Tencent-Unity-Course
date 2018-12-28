@@ -126,7 +126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1813593077114236
 GameObject:
   m_ObjectHideFlags: 0
@@ -571,6 +571,7 @@ MonoBehaviour:
   isEquipped: 1
   model: {fileID: 4955160073447660}
   rb: {fileID: 0}
+  floatingDelta: 0
   moduleType: 0
   modulePart: 1
   rimRenderer: {fileID: 23646199860242456}
@@ -599,7 +600,7 @@ MonoBehaviour:
   _burstBulletCountMultiplier: 1
   bulletPrefab: {fileID: 1516616004633074, guid: 68b2d05c388f9b144a95a1f30ebdf53d,
     type: 2}
-  damageBase: 1
+  damageBase: 100
   criticalRateMultiplier: 1
   criticalDamageRateMultiplier: 1
   fireRateBase: 1.5
@@ -631,6 +632,7 @@ MonoBehaviour:
   isEquipped: 0
   model: {fileID: 4580152185101476}
   rb: {fileID: 0}
+  floatingDelta: 0
   muzzle: {fileID: 4660208157813972}
   equipRect: {fileID: 4833431900369986}
   bulletLifeSpan: 3

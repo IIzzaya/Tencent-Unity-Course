@@ -10,6 +10,8 @@ public class PlayerItemSensor : MonoBehaviour {
 	private GameObject minDistanceObj;
 
 	private void OnTriggerStay(Collider other) {
+		if (player.isShooting)
+			HUDController.DisableFloatingPanel();
 
 		if (other.tag == "Weapon") {
 			var weapon = other.GetComponent<Weapon>();
@@ -19,7 +21,8 @@ public class PlayerItemSensor : MonoBehaviour {
 				if (dis < minDistance) {
 					minDistance = dis;
 					minDistanceObj = weapon.gameObject;
-					HUDController.EnableFloatingPanelAt(weapon.model.transform);
+					if (!player.isShooting)
+						HUDController.EnableFloatingPanelAt(weapon.model.transform);
 					player.weaponToEquip = weapon;
 				}
 			}
@@ -33,7 +36,8 @@ public class PlayerItemSensor : MonoBehaviour {
 				if (dis < minDistance) {
 					minDistance = dis;
 					minDistanceObj = module.gameObject;
-					HUDController.EnableFloatingPanelAt(module.model.transform);
+					if (!player.isShooting)
+						HUDController.EnableFloatingPanelAt(module.model.transform);
 					player.moduleToEquip = module;
 				}
 			}

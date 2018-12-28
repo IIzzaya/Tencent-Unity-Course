@@ -150,7 +150,7 @@ public class PlayerController : MonoBehaviour {
                 HUDController.DisableFloatingPanel();
             }
 
-            if (moduleToEquip != null) {
+            if (moduleToEquip != null && weapon != null) {
                 weapon.EquipModule(moduleToEquip);
                 moduleToEquip = null;
                 HUDController.DisableFloatingPanel();

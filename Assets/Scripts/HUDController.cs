@@ -9,7 +9,16 @@ public class HUDController : MonoBehaviour {
 
 	public Text magazineText;
 	public FloatingPanelController floatingPanel;
+	public GameObject gameOverPanel;
 	private bool isFloatingPanelActive = false;
+
+	public static void GameOver() {
+		global.gameOverPanel.SetActive(true);
+	}
+
+	public void OnRestartButtonClick() {
+		GameController.Restart();
+	}
 
 	public void UpdateMagazineText(int loaded, int size, int count) {
 		magazineText.text = loaded + "/" + size * count;
@@ -44,6 +53,7 @@ public class HUDController : MonoBehaviour {
 		if (floatingPanel == null)
 			floatingPanel = GameObject.Find("Floating Panel").GetComponent<FloatingPanelController>();
 		isFloatingPanelActive = false;
+		gameOverPanel.SetActive(false);
 
 		UpdateMagazineText(0, 0, 0);
 	}

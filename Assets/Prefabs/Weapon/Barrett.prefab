@@ -414,7 +414,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779541624022598}
   m_LocalRotation: {x: -0.7071084, y: -0, z: -0, w: 0.7071052}
-  m_LocalPosition: {x: 0, y: 7.5, z: 0}
+  m_LocalPosition: {x: 7.06, y: 7.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4344922706520494}
@@ -852,6 +852,7 @@ MonoBehaviour:
   isEquipped: 0
   model: {fileID: 4075333746579418}
   rb: {fileID: 0}
+  floatingDelta: 0
   muzzle: {fileID: 4999191305381328}
   equipRect: {fileID: 4344922706520494}
   bulletLifeSpan: 3
@@ -886,6 +887,7 @@ MonoBehaviour:
   isEquipped: 1
   model: {fileID: 4920580472440550}
   rb: {fileID: 0}
+  floatingDelta: 0
   moduleType: 0
   modulePart: 1
   rimRenderer: {fileID: 23146799226074886}
@@ -914,7 +916,7 @@ MonoBehaviour:
   _burstBulletCountMultiplier: 1
   bulletPrefab: {fileID: 1516616004633074, guid: 68b2d05c388f9b144a95a1f30ebdf53d,
     type: 2}
-  damageBase: 1
+  damageBase: 200
   criticalRateMultiplier: 1
   criticalDamageRateMultiplier: 1
   fireRateBase: 1.5

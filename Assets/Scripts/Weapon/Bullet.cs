@@ -5,12 +5,18 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
 
 	public float speed;
+	public int damage;
 	public int bounceLeftTimes;
 	[HideInInspector] public Rigidbody rb;
 
 	private Vector3 direction;
 
 	private void OnCollisionEnter(Collision other) {
+		if (other.gameObject.tag == "Enemy") {
+			var eHealth = other.gameObject.GetComponent<EnemyHealth>();
+			eHealth.TakeDamage(damage);
+		}
+
 		var contactInfo = other.contacts[0];
 
 		// Debug.DrawLine(contactInfo.point, contactInfo.point + contactInfo.normal);

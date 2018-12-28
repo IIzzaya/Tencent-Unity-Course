@@ -176,7 +176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4134469958894492
 Transform:
   m_ObjectHideFlags: 1
@@ -267,7 +267,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1934829484016918}
   m_LocalRotation: {x: -0.70710677, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -3.43, y: 3.7580001, z: 2.74}
+  m_LocalPosition: {x: -4.224, y: 3.7580001, z: 2.74}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4545578156559206}
@@ -571,6 +571,7 @@ MonoBehaviour:
   isEquipped: 0
   model: {fileID: 4265139956292530}
   rb: {fileID: 0}
+  floatingDelta: 0
   muzzle: {fileID: 4332328986660722}
   equipRect: {fileID: 4545578156559206}
   bulletLifeSpan: 3
@@ -605,6 +606,7 @@ MonoBehaviour:
   isEquipped: 1
   model: {fileID: 4502152507751072}
   rb: {fileID: 0}
+  floatingDelta: 0
   moduleType: 0
   modulePart: 1
   rimRenderer: {fileID: 23792010257333624}
@@ -633,7 +635,7 @@ MonoBehaviour:
   _burstBulletCountMultiplier: 1
   bulletPrefab: {fileID: 1516616004633074, guid: 68b2d05c388f9b144a95a1f30ebdf53d,
     type: 2}
-  damageBase: 1
+  damageBase: 30
   criticalRateMultiplier: 1
   criticalDamageRateMultiplier: 1
   fireRateBase: 10

@@ -71,6 +71,7 @@ public class Weapon : FloatingItem {
 						bullet = Instantiate(body.bulletPrefab, muzzle.position, Quaternion.Euler(0, yAngle, 0));
 						bulletInfo = bullet.GetComponent<Bullet>();
 						bulletInfo.speed = bulletSpeed;
+						bulletInfo.damage = (int) damage;
 						bulletInfo.bounceLeftTimes = (int) bounceTimes;
 						Destroy(bullet, bulletLifeSpan);
 					}
@@ -85,6 +86,7 @@ public class Weapon : FloatingItem {
 						bullet = Instantiate(body.bulletPrefab, muzzle.position, Quaternion.Euler(0, angleStart + (i + 1) * angleStep + yAngle, 0));
 						bulletInfo = bullet.GetComponent<Bullet>();
 						bulletInfo.speed = bulletSpeed;
+						bulletInfo.damage = (int) damage;
 						bulletInfo.bounceLeftTimes = (int) bounceTimes;
 						Destroy(bullet, bulletLifeSpan);
 					}
@@ -95,14 +97,14 @@ public class Weapon : FloatingItem {
 					var forward = muzzle.forward;
 					forward.y = 0;
 					if (Physics.Raycast(muzzle.position, forward, out hit, 100, LayerMask.GetMask("Default"))) {
-						Debug.DrawRay(muzzle.position, forward * hit.distance, Color.yellow);
+						// Debug.DrawRay(muzzle.position, forward * hit.distance, Color.yellow);
 						body.laser.gameObject.SetActive(true);
 						body.laser.GetEndPoint().position = hit.point;
 						body.laser.SetMidPoints();
-						Debug.Log("Did Hit");
+						// Debug.Log("Did Hit");
 					} else {
-						Debug.DrawRay(muzzle.position, forward * 100, Color.white);
-						Debug.Log("Did not Hit");
+						// Debug.DrawRay(muzzle.position, forward * 100, Color.white);
+						// Debug.Log("Did not Hit");
 						body.laser.gameObject.SetActive(true);
 						body.laser.GetEndPoint().position = muzzle.position + forward * 100;
 						body.laser.SetMidPoints();

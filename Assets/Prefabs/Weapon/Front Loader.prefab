@@ -590,6 +590,7 @@ MonoBehaviour:
   isEquipped: 0
   model: {fileID: 4856912366721776}
   rb: {fileID: 0}
+  floatingDelta: 0
   muzzle: {fileID: 4648874026481016}
   equipRect: {fileID: 4132439643228568}
   bulletLifeSpan: 3
@@ -624,6 +625,7 @@ MonoBehaviour:
   isEquipped: 1
   model: {fileID: 4240294435609434}
   rb: {fileID: 0}
+  floatingDelta: 0
   moduleType: 2
   modulePart: 1
   rimRenderer: {fileID: 23861938424818658}
@@ -652,7 +654,7 @@ MonoBehaviour:
   _burstBulletCountMultiplier: 1
   bulletPrefab: {fileID: 1516616004633074, guid: 68b2d05c388f9b144a95a1f30ebdf53d,
     type: 2}
-  damageBase: 1
+  damageBase: 15
   criticalRateMultiplier: 1
   criticalDamageRateMultiplier: 1
   fireRateBase: 1
